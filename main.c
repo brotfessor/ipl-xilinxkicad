@@ -1,3 +1,8 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * Copyright (c) 2020 Julian Sax <jsbc@gmx.de>
+ */
+
 #include <sexp.h>
 #include <stdint.h>
 #include <stdio.h>
