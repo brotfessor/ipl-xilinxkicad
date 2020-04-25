@@ -66,7 +66,9 @@ static int csv_findline(uint8_t *buffer, int col, uint8_t *value) {
 }
 
 static double atof_len(uint8_t *str, int length) {
-  uint8_t buffer[100];
+  if(length < 1)
+    return 0.0;
+  static uint8_t buffer[100];
   memcpy(buffer, str, length);
   buffer[length] = 0;
   return atof(buffer);
@@ -79,6 +81,12 @@ static double calc_equiv_tracelength(double mindelay, double maxdelay, double ep
 
 static double get_equiv_tracelength(uint8_t *buffer, uint8_t *pinname, double epsilon_r) {
   uint8_t *pos;
+
+  if(strlen(pinname) == 0) {
+    if(!quiet)
+      fprintf(stderr, "WARN: empty pin name\n");
+    return 0.0;
+  }
   int line = csv_findline(buffer, CSV_COL_PINNUM, pinname);
   if(line < 0) {
     fprintf(stderr, "WARN: could not find entry for pin %s\n", pinname);
